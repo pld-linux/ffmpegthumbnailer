@@ -1,4 +1,5 @@
 Summary:	Lightweight video thumbnailer
+Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
 Version:	1.1
 Release:	1
@@ -18,6 +19,11 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 ffmpegthumbnailer can be used by file managers to create thumbnails
 for your video files. It uses ffmpeg to decode frames from the video
 files.
+
+%description -l pl.UTF-8
+ffmpegthumbnailer może być używany przez zarządców plików do tworzenia
+miniaturek dla plików filmów. Wykorzystuje ffmpeg do dekodowania
+klatek.
 
 %prep
 %setup -q
