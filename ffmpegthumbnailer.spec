@@ -4,15 +4,15 @@ Name:		ffmpegthumbnailer
 Version:	1.1.3
 Release:	1
 License:	GPL v2
-Group:		Applications
+Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	8abed939bdbd7261cb22f6383b761e43
 URL:		http://code.google.com/p/ffmpegthumbnailer/
-BuildRequires:	a52dec-libs-devel
-BuildRequires:	autoconf
+BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
 BuildRequires:	ffmpeg-devel
 BuildRequires:	libpng-devel
+BuildRequires:	pkgconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
