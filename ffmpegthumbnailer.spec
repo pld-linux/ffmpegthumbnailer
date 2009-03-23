@@ -1,12 +1,12 @@
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	1.3.0
+Version:	1.5.0
 Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	51296d03aafd522d9f5fd037e65bf161
+# Source0-md5:	b260507b2c8d9db46d5b73d76b3986b6
 URL:		http://code.google.com/p/ffmpegthumbnailer/
 BuildRequires:	autoconf >= 2.50
 BuildRequires:	automake
@@ -81,7 +81,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/ffmpegthumbnailer
 %attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.2
+%attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.?
 %{_mandir}/man1/ffmpegthumbnailer.1*
 
 %files devel
