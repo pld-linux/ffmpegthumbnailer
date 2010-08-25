@@ -8,8 +8,8 @@ Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	ee473a26e7e8da216e64bbb33e87772c
 URL:		http://code.google.com/p/ffmpegthumbnailer/
-BuildRequires:	autoconf >= 2.50
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.62
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	ffmpeg-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
