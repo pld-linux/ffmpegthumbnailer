@@ -1,21 +1,29 @@
+#
+# Conditional builds
+%bcond_without	gnomevfs	# Support for gnome-vfs uris
+
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.0.2
-Release:	2
+Version:	2.0.4
+Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	ee473a26e7e8da216e64bbb33e87772c
+# Source0-md5:	83b43130e29a26126a50705a011004be
 URL:		http://code.google.com/p/ffmpegthumbnailer/
+%{?with_gnomevfs:BuildRequires:	GConf2-devel >= 1.2.1}
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
-BuildRequires:	ffmpeg-devel
+BuildRequires:	ffmpeg-devel >= 0.6
+%{?with_gnomevfs:BuildRequires:	gnome-vfs2-devel >= 2.0}
+%{?with_gnomevfs:BuildRequires:	libgnome-devel >= 2.0}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -57,12 +65,21 @@ Statyczna biblioteka libffmpegthumbnailer.
 %prep
 %setup -q
 
+# use runtime library paths for dlopen
+sed -i -e '
+	# gnome-vfs2-libs
+	s,"libgnomevfs-2.so","libgnomevfs-2.so.0",
+	# glib2
+	s,"libglib-2.0.so","libglib-2.0.so.0",
+' main.cpp
+
 %build
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__automake}
-%configure
+%configure \
+	%{?with_gnomevfs:--enable-gnome-vfs}
 %{__make}
 
 %install
@@ -82,7 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/ffmpegthumbnailer
 %attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.?
+%attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.4
 %{_mandir}/man1/ffmpegthumbnailer.1*
 
 %files devel
