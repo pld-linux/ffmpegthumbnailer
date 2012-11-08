@@ -1,7 +1,3 @@
-#
-# Conditional builds
-%bcond_without	gnomevfs	# Support for gnome-vfs uris
-
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
@@ -12,18 +8,16 @@ Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
 # Source0-md5:	03e081f89778cd5e4fce30b29a4630e1
 URL:		http://code.google.com/p/ffmpegthumbnailer/
-%{?with_gnomevfs:BuildRequires:	GConf2-devel >= 1.2.1}
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	ffmpeg-devel >= 0.6
-%{?with_gnomevfs:BuildRequires:	gnome-vfs2-devel >= 2.0}
-%{?with_gnomevfs:BuildRequires:	libgnome-devel >= 2.0}
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
+Requires:	glib2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -67,19 +61,17 @@ Statyczna biblioteka libffmpegthumbnailer.
 
 # use runtime library paths for dlopen
 sed -i -e '
-	# gnome-vfs2-libs
-	s,"libgnomevfs-2.so","libgnomevfs-2.so.0",
 	# glib2
 	s,"libglib-2.0.so","libglib-2.0.so.0",
+	s,"libgobject-2.0.so","libgobject-2.0.so.0",
+	s,"libgio-2.0.so","libgio-2.0.so.0",
 ' main.cpp
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__automake}
 %configure \
-	%{?with_gnomevfs:--enable-gnome-vfs}
+	--enable-gio \
+	--enable-thumbnailer
+
 %{__make}
 
 %install
@@ -100,6 +92,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/ffmpegthumbnailer
 %attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.4
+%{_datadir}/thumbnailers/ffmpegthumbnailer.thumbnailer
 %{_mandir}/man1/ffmpegthumbnailer.1*
 
 %files devel
