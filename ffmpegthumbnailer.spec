@@ -5,12 +5,12 @@
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.0.7
-Release:	3
+Version:	2.0.8
+Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	2b5726894792ef484793dce9568a065a
+# Source0-md5:	03e081f89778cd5e4fce30b29a4630e1
 URL:		http://code.google.com/p/ffmpegthumbnailer/
 %{?with_gnomevfs:BuildRequires:	GConf2-devel >= 1.2.1}
 BuildRequires:	autoconf >= 2.62
