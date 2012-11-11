@@ -10,6 +10,7 @@ Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
 URL:		http://code.google.com/p/ffmpegthumbnailer/
 BuildRequires:	autoconf >= 2.62
 BuildRequires:	automake >= 1:1.11
+# libavcodec >= 52.26.0 libavformat libavutil libswscale
 BuildRequires:	ffmpeg-devel >= 0.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
@@ -17,6 +18,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
+# dlopens libglib-2.0.so.0 libgobject-2.0.so.0 libgio-2.0.so.0
 Requires:	glib2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -36,6 +38,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libffmpegthumbnailer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	ffmpeg-devel
+Requires:	libjpeg-devel
 Requires:	libpng-devel
 
 %description devel
@@ -60,7 +63,7 @@ Statyczna biblioteka libffmpegthumbnailer.
 %setup -q
 
 # use runtime library paths for dlopen
-sed -i -e '
+%{__sed} -i -e '
 	# glib2
 	s,"libglib-2.0.so","libglib-2.0.so.0",
 	s,"libgobject-2.0.so","libgobject-2.0.so.0",
