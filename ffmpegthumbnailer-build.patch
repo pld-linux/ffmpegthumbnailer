@@ -1,0 +1,10 @@
+--- ffmpegthumbnailer-2.0.8/libffmpegthumbnailer/pngwriter.cpp~	2012-08-25 14:07:44.000000000 +0200
++++ ffmpegthumbnailer-2.0.8/libffmpegthumbnailer/pngwriter.cpp	2013-11-07 22:28:14.557258535 +0100
+@@ -17,6 +17,7 @@
+ #include "pngwriter.h"
+ #include <stdexcept>
+ #include <cassert>
++#include <string.h>
+ 
+ using namespace std;
+ 
