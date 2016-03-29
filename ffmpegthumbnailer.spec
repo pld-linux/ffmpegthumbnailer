@@ -1,22 +1,20 @@
+%define		snap	9503bb9b
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.0.8
-Release:	7
+Version:	2.1.1
+Release:	0.%{snap}.1
 License:	GPL v2
 Group:		Applications/Graphics
-Source0:	http://ffmpegthumbnailer.googlecode.com/files/%{name}-%{version}.tar.gz
-# Source0-md5:	03e081f89778cd5e4fce30b29a4630e1
-Patch0:		%{name}-build.patch
-URL:		http://code.google.com/p/ffmpegthumbnailer/
-BuildRequires:	autoconf >= 2.62
-BuildRequires:	automake >= 1:1.11
+Source0:	%{name}-%{version}-%{snap}.tar.bz2
+# Source0-md5:	df7d3bc94a4cf37e1337eab246715e10
+URL:		https://github.com/dirkvdb/ffmpegthumbnailer
+BuildRequires:	cmake
 # libavcodec >= 52.26.0 libavformat libavutil libswscale
 BuildRequires:	ffmpeg-devel >= 0.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 # dlopens libglib-2.0.so.0 libgobject-2.0.so.0 libgio-2.0.so.0
@@ -62,26 +60,23 @@ Statyczna biblioteka libffmpegthumbnailer.
 
 %prep
 %setup -q
-%patch0 -p1
-
-# use runtime library paths for dlopen
-%{__sed} -i -e '
-	# glib2
-	s,"libglib-2.0.so","libglib-2.0.so.0",
-	s,"libgobject-2.0.so","libgobject-2.0.so.0",
-	s,"libgio-2.0.so","libgio-2.0.so.0",
-' main.cpp
 
 %build
-%configure \
-	--enable-gio \
-	--enable-thumbnailer
+mkdir build
+cd build
+%{cmake} \
+	-DENABLE_TESTS=ON \
+	-DENABLE_STATIC=ON \
+	-DENABLE_GIO=ON \
+	-DENABLE_THUMBNAILER=ON \
+	..
 
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
+cd build
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
@@ -103,7 +98,6 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so
-%{_libdir}/libffmpegthumbnailer.la
 %{_includedir}/libffmpegthumbnailer
 %{_pkgconfigdir}/libffmpegthumbnailer.pc
 
