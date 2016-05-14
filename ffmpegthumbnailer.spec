@@ -1,15 +1,20 @@
-%define		snap	9503bb9b
+#
+# Conditional build:
+%bcond_without	static_libs	# static library
+#
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
 Version:	2.1.1
-Release:	0.%{snap}.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
-Source0:	%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	df7d3bc94a4cf37e1337eab246715e10
+#Source0Download: https://github.com/dirkvdb/ffmpegthumbnailer/releases
+Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/releases/download/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	753c8ba68f66ae085ef178d7c5966cae
+Patch0:		%{name}-pc.patch
 URL:		https://github.com/dirkvdb/ffmpegthumbnailer
-BuildRequires:	cmake
+BuildRequires:	cmake >= 2.8
 # libavcodec >= 52.26.0 libavformat libavutil libswscale
 BuildRequires:	ffmpeg-devel >= 0.6
 BuildRequires:	libjpeg-devel
@@ -18,7 +23,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 # dlopens libglib-2.0.so.0 libgobject-2.0.so.0 libgio-2.0.so.0
-Requires:	glib2
+Requires:	glib2 >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -60,16 +65,16 @@ Statyczna biblioteka libffmpegthumbnailer.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 mkdir build
 cd build
-%{cmake} \
-	-DENABLE_TESTS=ON \
-	-DENABLE_STATIC=ON \
+%cmake .. \
 	-DENABLE_GIO=ON \
-	-DENABLE_THUMBNAILER=ON \
-	..
+	-DENABLE_TESTS=ON \
+	%{?with_static_libs:-DENABLE_STATIC=ON} \
+	-DENABLE_THUMBNAILER=ON
 
 %{__make}
 
@@ -101,6 +106,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/libffmpegthumbnailer
 %{_pkgconfigdir}/libffmpegthumbnailer.pc
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libffmpegthumbnailer.a
+%endif
