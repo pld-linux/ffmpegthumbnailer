@@ -5,22 +5,20 @@
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.2.2
-Release:	2
+Version:	2.2.3
+Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 #Source0Download: https://github.com/dirkvdb/ffmpegthumbnailer/releases
-Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/releases/download/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	ef466e64df666ba006c0b071eb48018e
-Patch0:		%{name}-pc.patch
-Patch1:		git.patch
+Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/archive/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	114472c46d9e1e1ab1f43834988ca150
 URL:		https://github.com/dirkvdb/ffmpegthumbnailer
-BuildRequires:	cmake >= 3.5
+BuildRequires:	cmake >= 3.12
 # libavcodec >= 52.26.0 libavformat libavutil libswscale
 BuildRequires:	ffmpeg-devel >= 0.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 # dlopens libglib-2.0.so.0 libgobject-2.0.so.0 libgio-2.0.so.0
@@ -66,8 +64,6 @@ Statyczna biblioteka libffmpegthumbnailer.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
 
 %build
 mkdir build
