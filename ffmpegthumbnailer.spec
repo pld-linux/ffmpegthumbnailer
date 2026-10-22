@@ -5,13 +5,13 @@
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.2.3
-Release:	3
+Version:	2.3.1
+Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 #Source0Download: https://github.com/dirkvdb/ffmpegthumbnailer/releases
-Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/archive/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	114472c46d9e1e1ab1f43834988ca150
+Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	d18725d847eab6daf04d841e535a8f7b
 URL:		https://github.com/dirkvdb/ffmpegthumbnailer
 BuildRequires:	cmake >= 3.12
 # libavcodec >= 52.26.0 libavformat libavutil libswscale
