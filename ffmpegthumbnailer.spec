@@ -5,24 +5,24 @@
 Summary:	Lightweight video thumbnailer
 Summary(pl.UTF-8):	Lekki program do wykonywania miniaturek dla filmów
 Name:		ffmpegthumbnailer
-Version:	2.3.1
+Version:	2.4.2
 Release:	1
 License:	GPL v2
 Group:		Applications/Graphics
 #Source0Download: https://github.com/dirkvdb/ffmpegthumbnailer/releases
 Source0:	https://github.com/dirkvdb/ffmpegthumbnailer/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	d18725d847eab6daf04d841e535a8f7b
+# Source0-md5:	726375b0f72219e3c05dc10d3a6c548a
 URL:		https://github.com/dirkvdb/ffmpegthumbnailer
 BuildRequires:	cmake >= 3.12
 # libavcodec >= 52.26.0 libavformat libavutil libswscale
 BuildRequires:	ffmpeg-devel >= 0.6
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
-BuildRequires:	libstdc++-devel >= 6:4.7
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	pkgconfig
 BuildRequires:	sed >= 4.0
 # dlopens libglib-2.0.so.0 libgobject-2.0.so.0 libgio-2.0.so.0
-Requires:	glib2 >= 2.0
+Requires:	glib2%{?_isa} >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -39,10 +39,10 @@ klatek.
 Summary:	Header files for libffmpegthumbnailer library
 Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki libffmpegthumbnailer
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	ffmpeg-devel
-Requires:	libjpeg-devel
-Requires:	libpng-devel
+Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	ffmpeg-devel%{?_isa}
+Requires:	libjpeg-devel%{?_isa}
+Requires:	libpng-devel%{?_isa}
 
 %description devel
 Header files for libffmpegthumbnailer library.
@@ -54,7 +54,7 @@ Pliki nagłówkowe biblioteki libffmpegthumbnailer.
 Summary:	Static libffmpegthumbnailer library
 Summary(pl.UTF-8):	Statyczna biblioteka libffmpegthumbnailer
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description static
 Static libffmpegthumbnailer library.
@@ -90,16 +90,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README TODO
+%doc AUTHORS ChangeLog README.md TODO
 %attr(755,root,root) %{_bindir}/ffmpegthumbnailer
-%attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libffmpegthumbnailer.so.4
+%{_libdir}/libffmpegthumbnailer.so.*.*.*
+%ghost %{_libdir}/libffmpegthumbnailer.so.5
 %{_datadir}/thumbnailers/ffmpegthumbnailer.thumbnailer
 %{_mandir}/man1/ffmpegthumbnailer.1*
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libffmpegthumbnailer.so
+%{_libdir}/libffmpegthumbnailer.so
 %{_includedir}/libffmpegthumbnailer
 %{_pkgconfigdir}/libffmpegthumbnailer.pc
 
